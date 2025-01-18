@@ -9,8 +9,10 @@ typedef struct {
 // Creating the original vector
 Vector2 vector2_create(float x, float y);
 
-// Adding the two vectors 
+// Adding/Subtracting/Multiplying the two vectors 
 void vector2_add(const Vector2* left, const Vector2* right, Vector2* dest);
+void vector2_sub(const Vector2* left, const Vector2* right, Vector2* dest);
+void vector2_mul(const Vector2* left, const Vector2* right, Vector2* dest);
 
 // Getting the length of the vector
 float vector2_length(const Vector2* v);
