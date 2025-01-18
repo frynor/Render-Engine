@@ -1,3 +1,5 @@
+# Compiling like a sigma programmer XD
+
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 TARGET= myprogram
@@ -6,7 +8,7 @@ HEADERS = vector2.h
 OBJECTS = $(SOURCES:.c=.o)
 
 
-# Default target
+# Default target name
 all: $(TARGET)
 
 # Linking the binary
@@ -14,7 +16,7 @@ all: $(TARGET)
 $(TARGET) : $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ -lm
 
-# Compiling the source code
+# Compiling the source code (chad makefile)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@ 
