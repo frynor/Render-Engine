@@ -31,11 +31,11 @@ float dot(const Vector2* a, const Vector2* b) {
 
 float angle(const Vector2* a, const Vector2* b) {
 	float dot_product = dot(a, b);
-	return acos(dot_product/vector2_length(a) + vector2_length(b)); 
+	return acos(dot_product/vector2_length(a) * vector2_length(b)); 
 }
 
 float dist(const Vector2* a, const Vector2* b) {
-	float x = a->x - b->y;
+	float x = a->x - b->x;
 	float y = a->y - b->y;
 
 	return sqrt(x * x + y * y);

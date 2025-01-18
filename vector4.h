@@ -1,0 +1,32 @@
+#ifndef VECTOR4_H
+#define VECTOR4_H
+
+typedef struct {
+	float x;
+	float y;
+	float z;
+	float w;
+} Vector4;
+
+// Creating the original vector
+Vector4 vector4_create(float x, float y, float z, float w);
+
+// Adding/Subtracting/Multiplying the two vectors 
+void vector4_add(const Vector4* left, const Vector4* right, Vector4* dest);
+void vector4_sub(const Vector4* left, const Vector4* right, Vector4* dest);
+void vector4_mul(const Vector4* left, const Vector4* right, Vector4* dest);
+
+// Dot product/Angle/Distance in vectors
+float dot(const Vector4* a, const Vector4* b);
+float angle(const Vector4* a, const Vector4* b);
+float dist(const Vector4* a, const Vector4* b);
+
+// Vector normalization
+void normalize(Vector4* v);
+
+// Getting the length of the vector
+float vector4_length(const Vector4* v);
+
+
+#endif // VECTOR4_H
+

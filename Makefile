@@ -12,7 +12,7 @@ all: $(TARGET)
 # Linking the binary
 
 $(TARGET) : $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@ -lm
 
 # Compiling the source code
 
