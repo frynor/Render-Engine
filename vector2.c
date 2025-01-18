@@ -41,3 +41,11 @@ float dist(const Vector2* a, const Vector2* b) {
 	return sqrt(x * x + y * y);
 }
 
+void normalize(Vector2* v) {
+	float length = vector2_length(v);
+
+	if (length != 0) {
+		v->x /= length;
+		v->y /= length;
+	}	
+}
