@@ -1,10 +1,11 @@
 # Compiling like a sigma programmer XD
 
+IDIR = include
 CC = gcc
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -I$(IDIR) -Wall -Wextra -O2
 TARGET= myprogram
-SOURCES = main.c vector2.c 
-HEADERS = vector2.h 
+SOURCES = main.c $(wildcard $(IDIR)/*.c) 
+HEADERS = $(wildcard $(IDIR)/*.h)
 OBJECTS = $(SOURCES:.c=.o)
 
 

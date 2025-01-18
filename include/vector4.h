@@ -17,12 +17,12 @@ void vector4_sub(const Vector4* left, const Vector4* right, Vector4* dest);
 void vector4_mul(const Vector4* left, const Vector4* right, Vector4* dest);
 
 // Dot product/Angle/Distance in vectors
-float dot(const Vector4* a, const Vector4* b);
-float angle(const Vector4* a, const Vector4* b);
-float dist(const Vector4* a, const Vector4* b);
+float dot4(const Vector4* a, const Vector4* b);
+float angle4(const Vector4* a, const Vector4* b);
+float dist4(const Vector4* a, const Vector4* b);
 
 // Vector normalization
-void normalize(Vector4* v);
+void normalize4(Vector4* v);
 
 // Getting the length of the vector
 float vector4_length(const Vector4* v);

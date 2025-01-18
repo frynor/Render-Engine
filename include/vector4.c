@@ -31,16 +31,16 @@ void vector4_mul(const Vector4* left, const Vector4* right, Vector4* dest) {
 	dest->w = left->w * right->w;
 }
 
-float dot(const Vector4* a, const Vector4* b) {
+float dot4(const Vector4* a, const Vector4* b) {
 	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
 }
 
-float angle(const Vector4* a, const Vector4* b) {
-	float dot_product = dot(a, b);
+float angle4(const Vector4* a, const Vector4* b) {
+	float dot_product = dot4(a, b);
 	return acos(dot_product/vector4_length(a) * vector4_length(b)); 
 }
 
-float dist(const Vector4* a, const Vector4* b) {
+float dist4(const Vector4* a, const Vector4* b) {
 	float x = a->x - b->x;
 	float y = a->y - b->y;
 	float z = a->z - b->z;
@@ -49,7 +49,7 @@ float dist(const Vector4* a, const Vector4* b) {
 	return sqrt(x * x + y * y + z * z + w * w);
 }
 
-void normalize(Vector4* v) {
+void normalize4(Vector4* v) {
 	float length = vector4_length(v);
 
 	if (length != 0) {

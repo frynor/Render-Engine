@@ -34,16 +34,16 @@ void cross(const Vector3* one, const Vector3* two, Vector3* dest) {
 	dest->z = (one->x * two->y) - (one->y * two->x);
 }
 
-float dot(const Vector3* a, const Vector3* b) {
+float dot3(const Vector3* a, const Vector3* b) {
 	return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
-float angle(const Vector3* a, const Vector3* b) {
-	float dot_product = dot(a, b);
+float angle3(const Vector3* a, const Vector3* b) {
+	float dot_product = dot3(a, b);
 	return acos(dot_product/vector3_length(a) * vector3_length(b)); 
 }
 
-float dist(const Vector3* a, const Vector3* b) {
+float dist3(const Vector3* a, const Vector3* b) {
 	float x = a->x - b->x;
 	float y = a->y - b->y;
 	float z = a->z - b->z;
@@ -51,7 +51,7 @@ float dist(const Vector3* a, const Vector3* b) {
 	return sqrt(x * x + y * y + z * z);
 }
 
-void normalize(Vector3* v) {
+void normalize3(Vector3* v) {
 	float length = vector3_length(v);
 
 	if (length != 0) {
