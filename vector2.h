@@ -14,6 +14,10 @@ void vector2_add(const Vector2* left, const Vector2* right, Vector2* dest);
 void vector2_sub(const Vector2* left, const Vector2* right, Vector2* dest);
 void vector2_mul(const Vector2* left, const Vector2* right, Vector2* dest);
 
+float dot(const Vector2* a, const Vector2* b);
+float angle(const Vector2* a, const Vector2* b);
+float dist(const Vector2* a, const Vector2* b);
+
 // Getting the length of the vector
 float vector2_length(const Vector2* v);
 
