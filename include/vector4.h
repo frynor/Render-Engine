@@ -18,6 +18,7 @@ float vector4_length(const Vector4* v);
 void vector4_add(const Vector4* left, const Vector4* right, Vector4* dest);
 void vector4_sub(const Vector4* left, const Vector4* right, Vector4* dest);
 void vector4_mul(const Vector4* left, const Vector4* right, Vector4* dest);
+void lerp4(const Vector4* a, const Vector4* b, float t, Vector4* dest);
 
 // Dot product/Angle/Distance in vectors
 float dot4(const Vector4* a, const Vector4* b);

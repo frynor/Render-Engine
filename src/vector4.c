@@ -31,6 +31,13 @@ void vector4_mul(const Vector4* left, const Vector4* right, Vector4* dest) {
 	dest->w = left->w * right->w;
 }
 
+void lerp4(const Vector4 *a, const Vector4 *b, float t, Vector4 *dest) {
+	dest->x = a->x + ((b->x - a->x) * t);
+	dest->y = a->y + ((b->y - a->y) * t);
+	dest->z = a->z + ((b->z - a->z) * t);
+	dest->w = a->w + ((b->w - a->w) * t);
+}
+
 float dot4(const Vector4* a, const Vector4* b) {
 	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
 }

@@ -16,6 +16,7 @@ float vector2_length2(const Vector2* v);
 void vector2_add(const Vector2* left, const Vector2* right, Vector2* dest);
 void vector2_sub(const Vector2* left, const Vector2* right, Vector2* dest);
 void vector2_mul(const Vector2* left, const Vector2* right, Vector2* dest);
+void lerp2(const Vector2* a, const Vector2* b, float t, Vector2* dest);
 
 // Dot product/Angle/Distance in vectors
 float dot2(const Vector2* a, const Vector2* b);

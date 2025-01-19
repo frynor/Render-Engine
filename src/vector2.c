@@ -25,6 +25,12 @@ void vector2_mul(const Vector2* left, const Vector2* right, Vector2* dest) {
 	dest->y = left->y * right->y;
 }
 
+void lerp2(const Vector2* a, const Vector2* b, float t, Vector2* dest) {
+	dest->x = a->x + ((b->x - a->x) * t);
+	dest->y = a->y + ((b->y - a->y) * t);
+}
+
+
 float dot2(const Vector2* a, const Vector2* b) {
 	return a->x * b->x + a->y * b->y;
 }

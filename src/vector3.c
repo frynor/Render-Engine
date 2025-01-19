@@ -28,10 +28,16 @@ void vector3_mul(const Vector3* left, const Vector3* right, Vector3* dest) {
 	dest->z = left->z * right->z;
 }
 
-void cross(const Vector3* one, const Vector3* two, Vector3* dest) {
+void cross3(const Vector3* one, const Vector3* two, Vector3* dest) {
 	dest->x = (one->y * two->z) - (one->z * two->y);
 	dest->y = (one->z * two->x) - (one->x * two->y);
 	dest->z = (one->x * two->y) - (one->y * two->x);
+}
+
+void lerp3(const Vector3 *a, const Vector3 *b, float t, Vector3 *dest) {
+	dest->x = a->x + ((b->x - a->x) * t);
+	dest->y = a->y + ((b->y - a->y) * t);
+	dest->z = a->z + ((b->z - a->z) * t);
 }
 
 float dot3(const Vector3* a, const Vector3* b) {

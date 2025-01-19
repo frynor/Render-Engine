@@ -1,13 +1,16 @@
 # Compiling like a sigma programmer XD
 
 IDIR = include
+SDIR = src
+ODIR = obj
 CC = gcc
 CFLAGS = -I$(IDIR) -Wall -Wextra -O2
 TARGET= myprogram
-SOURCES = main.c $(wildcard $(IDIR)/*.c) 
-HEADERS = $(wildcard $(IDIR)/*.h)
-OBJECTS = $(SOURCES:.c=.o)
 
+
+SOURCES = main.c $(wildcard $(SDIR)/*.c) 
+HEADERS = $(wildcard $(IDIR)/*.h)
+OBJECTS = $(patsubst %.c, $(ODIR)/%.o, $(notdir $(SOURCES)))
 
 # Default target name
 all: $(TARGET)
@@ -19,8 +22,13 @@ $(TARGET) : $(OBJECTS)
 
 # Compiling the source code (chad makefile)
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@ 
+$(ODIR)/%.o: $(SDIR)/%.c $(HEADERS)
+	mkdir -p $(ODIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(ODIR)/main.o: main.c $(HEADERS)
+	mkdir -p $(ODIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
