@@ -37,7 +37,7 @@ float dot4(const Vector4* a, const Vector4* b) {
 
 float angle4(const Vector4* a, const Vector4* b) {
 	float dot_product = dot4(a, b);
-	return acos(dot_product/vector4_length(a) * vector4_length(b)); 
+	return acos(dot_product/(vector4_length(a) * vector4_length(b))); 
 }
 
 float dist4(const Vector4* a, const Vector4* b) {
@@ -60,3 +60,9 @@ void normalize4(Vector4* v) {
 	}	
 }
 
+void scale4(Vector4* v, float s) {
+	v->x *= s;
+	v->y *= s;
+	v->z *= s;
+	v->w *= s;
+}

@@ -11,6 +11,9 @@ typedef struct {
 // Creating the original vector
 Vector4 vector4_create(float x, float y, float z, float w);
 
+// Getting the length of the vector
+float vector4_length(const Vector4* v);
+
 // Adding/Subtracting/Multiplying the two vectors 
 void vector4_add(const Vector4* left, const Vector4* right, Vector4* dest);
 void vector4_sub(const Vector4* left, const Vector4* right, Vector4* dest);
@@ -24,9 +27,7 @@ float dist4(const Vector4* a, const Vector4* b);
 // Vector normalization
 void normalize4(Vector4* v);
 
-// Getting the length of the vector
-float vector4_length(const Vector4* v);
-
+void scale4(Vector4* v, float s);
 
 #endif // VECTOR4_H
 

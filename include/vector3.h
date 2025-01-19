@@ -10,6 +10,9 @@ typedef struct {
 // Creating the original vector
 Vector3 vector3_create(float x, float y, float z);
 
+// Getting the length of the vector
+float vector3_length(const Vector3* v);
+
 // Adding/Subtracting/Multiplying the two vectors 
 void vector3_add(const Vector3* left, const Vector3* right, Vector3* dest);
 void vector3_sub(const Vector3* left, const Vector3* right, Vector3* dest);
@@ -24,9 +27,7 @@ float dist3(const Vector3* a, const Vector3* b);
 // Vector normalization
 void normalize3(Vector3* v);
 
-// Getting the length of the vector
-float vector3_length(const Vector3* v);
-
+void scale3(Vector3* v, float s);
 
 #endif // VECTOR3_H
 

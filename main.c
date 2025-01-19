@@ -19,7 +19,7 @@ int main() {
 	printf("A - B = (%.2f, %.2f)\n", result_sub.x, result_sub.y);
 	printf("A * B = (%.2f, %.2f)\n", result_mul.x, result_mul.y);
 
-	float length_a = vector2_length(&vector_a);
+	float length_a = vector2_length2(&vector_a);
 
 	printf("Length of the vector A: %.2f\n", length_a);
 

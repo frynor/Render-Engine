@@ -9,6 +9,9 @@ typedef struct {
 // Creating the original vector
 Vector2 vector2_create(float x, float y);
 
+// Getting the length of the vector
+float vector2_length2(const Vector2* v);
+
 // Adding/Subtracting/Multiplying the two vectors 
 void vector2_add(const Vector2* left, const Vector2* right, Vector2* dest);
 void vector2_sub(const Vector2* left, const Vector2* right, Vector2* dest);
@@ -22,8 +25,7 @@ float dist2(const Vector2* a, const Vector2* b);
 // Vector normalization
 void normalize2(Vector2* v);
 
-// Getting the length of the vector
-float vector2_length2(const Vector2* v);
-
+// Vector scale
+void scale2(Vector2* v, float s);
 
 #endif // VECTOR2_H

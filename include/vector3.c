@@ -40,7 +40,7 @@ float dot3(const Vector3* a, const Vector3* b) {
 
 float angle3(const Vector3* a, const Vector3* b) {
 	float dot_product = dot3(a, b);
-	return acos(dot_product/vector3_length(a) * vector3_length(b)); 
+	return acos(dot_product/(vector3_length(a) * vector3_length(b))); 
 }
 
 float dist3(const Vector3* a, const Vector3* b) {
@@ -61,3 +61,8 @@ void normalize3(Vector3* v) {
 	}	
 }
 
+void scale3(Vector3* v, float s) {
+	v->x *= s;
+	v->y *= s;
+	v->z *= s;
+}

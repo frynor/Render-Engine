@@ -6,7 +6,7 @@ Vector2 vector2_create(float x, float y) {
 	return v;
 }
 
-float vector2_length(const Vector2* v) {
+float vector2_length2(const Vector2* v) {
 	return sqrt(v->x * v->x + v->y * v->y);
 }
 
@@ -31,7 +31,7 @@ float dot2(const Vector2* a, const Vector2* b) {
 
 float angle2(const Vector2* a, const Vector2* b) {
 	float dot_product = dot2(a, b);
-	return acos(dot_product/vector2_length(a) * vector2_length(b)); 
+	return acos(dot_product/(vector2_length2(a) * vector2_length2(b))); 
 }
 
 float dist2(const Vector2* a, const Vector2* b) {
@@ -42,10 +42,15 @@ float dist2(const Vector2* a, const Vector2* b) {
 }
 
 void normalize2(Vector2* v) {
-	float length = vector2_length(v);
+	float length = vector2_length2(v);
 
 	if (length != 0) {
 		v->x /= length;
 		v->y /= length;
 	}	
+}
+
+void scale2(Vector2* v, float s) {
+	v->x *= s;
+	v->y *= s;
 }
