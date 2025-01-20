@@ -92,7 +92,6 @@ void matrix33_transpose(Matrix33* mat) {
 float det33(const Matrix33* mat) {
     if (!mat) return 0.0f;
     
-    // Using Sarrus' rule for 3x3 determinant
     return mat->m00 * (mat->m11 * mat->m22 - mat->m12 * mat->m21)
          - mat->m01 * (mat->m10 * mat->m22 - mat->m12 * mat->m20)
          + mat->m02 * (mat->m10 * mat->m21 - mat->m11 * mat->m20);

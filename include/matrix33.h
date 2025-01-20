@@ -3,7 +3,6 @@
 
 #include "vector3.h"
 
-// 2x2 Matrix
 typedef struct {
 	float m00, m01, m02; // First row
 	float m10, m11, m12; // Second row
@@ -20,7 +19,7 @@ void matrix33_set_zero(Matrix33* mat);
 void matrix33_transpose(Matrix33* mat);
 void matrix33_invert(Matrix33* mat);
 void matrix33_negate(Matrix33* mat);
-float det33(const Matrix33* mat);
+float det(const Matrix33* mat);
 
 #endif // MATRIX33_H
 
