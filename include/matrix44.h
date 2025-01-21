@@ -14,6 +14,7 @@ typedef struct {
 Matrix44 matrix44_create(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33);
 Matrix44 matrix44_create_default(void);
 Matrix44 matrix44_create_copy(const Matrix44* other);
+Vector4 matrix44_multiply_vector4(const Matrix44* m, const Vector4* v);
 void matrix44_print(const Matrix44* mat);
 
 void matrix44_add(const Matrix44* left, const Matrix44* right, Matrix44* dest);

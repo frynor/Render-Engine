@@ -19,6 +19,17 @@ Matrix44 matrix44_create_copy(const Matrix44* other) {
 	return mat;	
 }
 
+Vector4 matrix44_multiply_vector4(const Matrix44 *m, const Vector4 *v) {
+	Vector4 result;
+
+	result.x = m->m00 * v->x + m->m01 * v->y + m->m02 * v->z + m->m03 * v->w;
+    	result.y = m->m10 * v->x + m->m11 * v->y + m->m12 * v->z + m->m13 * v->w;
+    	result.z = m->m20 * v->x + m->m21 * v->y + m->m22 * v->z + m->m23 * v->w;
+    	result.w = m->m30 * v->x + m->m31 * v->y + m->m32 * v->z + m->m33 * v->w;
+    
+    	return result;
+}
+
 void matrix44_print(const Matrix44* mat) {
 	printf("%f %f %f %f\n", mat->m00, mat->m01, mat->m02, mat->m03);
 	printf("%f %f %f %f\n", mat->m10, mat->m11, mat->m12, mat->m13);

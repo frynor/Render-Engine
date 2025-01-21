@@ -1,4 +1,4 @@
-#include "vector4.h"
+#include "../include/vector4.h"
 #include <math.h>
 
 Vector4 vector4_create(float x, float y, float z, float w) {

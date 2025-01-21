@@ -30,5 +30,6 @@ void normalize4(Vector4* v);
 
 void scale4(Vector4* v, float s);
 
+
 #endif // VECTOR4_H
 
