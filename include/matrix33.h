@@ -9,6 +9,11 @@ typedef struct {
 	float m20, m21, m22; // Third row
 } Matrix33;
 
+Matrix33 matrix33_create(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22);
+Matrix33 matrix33_create_default(void);
+Matrix33 matrix33_create_copy(const Matrix33* other);
+void matrix33_print(const Matrix33* mat);
+
 void matrix33_add(const Matrix33* left, const Matrix33* right, Matrix33* dest);
 void matrix33_sub(const Matrix33* left, const Matrix33* right, Matrix33* dest);
 void matrix33_mul(const Matrix33* left, const Matrix33* right, Matrix33* dest);

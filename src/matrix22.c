@@ -1,4 +1,26 @@
 #include "../include/matrix22.h" 
+#include <stdio.h>
+
+Matrix22 matrix22_create(float m00, float m01, float m10, float m11) {
+	Matrix22 mat = {m00, m01, m10, m11};
+	return mat;
+}
+
+Matrix22 matrix22_create_default(void) {
+	Matrix22 mat = {1.0f, 0.0f, 0.0f, 1.0f};
+	return mat;
+}
+
+Matrix22 matrix22_create_copy(const Matrix22* other) {
+	Matrix22 mat = {other->m00, other->m01, other->m10, other->m11};
+	return mat;
+}
+
+void matrix22_print(const Matrix22* mat) {
+	if (!mat) return;
+	printf("%f %f\n", mat->m00, mat->m01);
+	printf("%f %f\n", mat->m10, mat->m11);
+}
 
 void matrix22_add(const Matrix22* left, const Matrix22* right, Matrix22* dest) {
 	if (!left || !right || !dest) return;
@@ -21,10 +43,10 @@ void matrix22_sub(const Matrix22 *left, const Matrix22 *right, Matrix22 *dest) {
 void matrix22_mul(const Matrix22 *left, const Matrix22 *right, Matrix22 *dest) {
 	if (!left || !right || !dest) return;
 
-	dest->m00 = left->m00 * right->m00 + left->m01 * right->m10;
-	dest->m01 = left->m00 * right->m01 + left->m01 * right->m11;
-	dest->m10 = left->m10 * right->m00 + left->m11 * right->m10;
-	dest->m11 = left->m10 * right->m01 + left->m11 * right->m11;
+	dest->m00 = left->m00 * right->m00 + left->m01 * right->m01;
+	dest->m01 = left->m01 * right->m00 + left->m11 * right->m01;
+	dest->m10 = left->m00 * right->m10 + left->m10 * right->m11;
+	dest->m11 = left->m01 * right->m10 + left->m11 * right->m11;
 }
 
 void matrix22_trans(const Matrix22 *left, const Vector2 *right, Vector2 *dest) {

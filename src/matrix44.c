@@ -1,8 +1,30 @@
 #include "../include/matrix44.h"
 #include <math.h>
+#include <stdio.h>
 
 #define DET33(t00, t01, t02, t10, t11, t12, t20, t21, t22) (((t00) * ((t11) * (t22) - (t12) * (t21))) + ((t01) * ((t12) * (t20) - (t10) * (t22))) + ((t02) * ((t10) * (t21) - (t11) * (t20))))
 
+Matrix44 matrix44_create(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33) {
+	Matrix44 mat = {m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33};
+	return mat;
+}
+
+Matrix44 matrix44_create_default(void) {
+	Matrix44 mat = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+	return mat;
+}
+
+Matrix44 matrix44_create_copy(const Matrix44* other) {
+	Matrix44 mat = {other->m00, other->m01, other->m02, other->m03, other->m10, other->m11, other->m12, other->m13, other->m20, other->m21, other->m22, other->m23, other->m30, other->m31, other->m32, other->m33};
+	return mat;	
+}
+
+void matrix44_print(const Matrix44* mat) {
+	printf("%f %f %f %f\n", mat->m00, mat->m01, mat->m02, mat->m03);
+	printf("%f %f %f %f\n", mat->m10, mat->m11, mat->m12, mat->m13);
+	printf("%f %f %f %f\n", mat->m20, mat->m21, mat->m22, mat->m23);
+	printf("%f %f %f %f\n", mat->m30, mat->m31, mat->m32, mat->m33);
+}
 
 void matrix44_add(const Matrix44* left, const Matrix44* right, Matrix44* dest) {
     if (!left || !right || !dest) return;
@@ -246,4 +268,13 @@ void rotate(Matrix44 *mat, const Vector3 *eulerAxis, float angle) {
     mat->m21 = f20 * t01 + f21 * t11 + f22 * t21;
     mat->m22 = f20 * t02 + f21 * t12 + f22 * t22;
     mat->m23 = f20 * t03 + f21 * t13 + f22 * t23;
+}
+
+void translate(Matrix44 *mat, const Vector3 *translation) {
+	if (!mat || !translation) return;
+
+	mat->m30 += mat->m00 * translation->x + mat->m10 * translation->y + mat->m20 * translation->z;
+	mat->m31 += mat->m01 * translation->x + mat->m11 * translation->y + mat->m21 * translation->z;
+	mat->m32 += mat->m02 * translation->x + mat->m12 * translation->y + mat->m22 * translation->z;
+	mat->m33 += mat->m03 * translation->x + mat->m13 * translation->y + mat->m23 * translation->z;
 }

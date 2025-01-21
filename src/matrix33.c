@@ -1,4 +1,26 @@
 #include "../include/matrix33.h"
+#include <stdio.h>
+
+Matrix33 matrix33_create(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22) {
+	Matrix33 mat = {m00, m01, m02, m10, m11, m12, m20, m21, m22};
+	return mat;
+}
+
+Matrix33 matrix33_create_default(void) {
+	Matrix33 mat = {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+	return mat;
+}
+
+Matrix33 matrix33_create_copy(const Matrix33* other) {
+	Matrix33 mat = {other->m00, other->m01, other->m02, other->m10, other->m11, other->m12, other->m20, other->m21, other->m22};
+	return mat;
+}
+
+void matrix33_print(const Matrix33* mat) {
+	printf("%f %f %f\n", mat->m00, mat->m01, mat->m02);
+	printf("%f %f %f\n", mat->m10, mat->m11, mat->m12);
+	printf("%f %f %f\n", mat->m20, mat->m21, mat->m22);
+}
 
 void matrix33_add(const Matrix33* left, const Matrix33* right, Matrix33* dest) {
     if (!left || !right || !dest) return;

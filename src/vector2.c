@@ -1,4 +1,4 @@
-#include "vector2.h"
+#include "../include/vector2.h"
 #include <math.h>
 
 Vector2 vector2_create(float x, float y) {
