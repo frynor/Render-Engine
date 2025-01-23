@@ -4,7 +4,7 @@ IDIR = include
 SDIR = src
 ODIR = obj
 CC = gcc
-CFLAGS = -I$(IDIR) -Wall -Wextra -O2
+CFLAGS = -I$(IDIR) -Wall -Wextra -O2 -lncurses -lm
 TARGET= myprogram
 
 
