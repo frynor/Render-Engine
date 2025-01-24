@@ -1,0 +1,11 @@
+# Ignoring object files
+
+obj/
+*.o
+
+# Ignoring compiled binaries
+bin/
+myprogram
+
+# Ignoring hidden files and folders
+*.~*
