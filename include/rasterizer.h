@@ -5,10 +5,7 @@
 #include "../include/vector3.h"
 #include "../include/vector4.h"
 #include "../include/matrix44.h"
-
-typedef struct {
-	int width, height;
-} Framebuffer;
+#include "../include/framebuffer.h"
 
 typedef struct {
 	Framebuffer* fb;
