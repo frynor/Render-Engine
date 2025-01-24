@@ -19,7 +19,7 @@ static bool isPointTriangle(int i, int j, const Vector2* v1, const Vector2* v2, 
     // THANK YOU CHATGPT FOR BARYCENTRIC INTERPOLATION CALCULATION AND FORMULA, YOUR A TOP G!!!!!!!!!!!!!!!
 }
 
-static Framebuffer* framebuffer_create(int width, int height) {
+/* static Framebuffer* framebuffer_create(int width, int height) {
 	Framebuffer* fb = (Framebuffer*)malloc(sizeof(Framebuffer));
 	if (!fb) return NULL;
 
@@ -27,7 +27,7 @@ static Framebuffer* framebuffer_create(int width, int height) {
 	fb->height = height;
 
 	return fb;
-}
+} */
 
 static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int height) {
 	if (!rast) return;
