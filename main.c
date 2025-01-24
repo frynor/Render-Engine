@@ -1,6 +1,7 @@
 #include "include/matrix44.h"
 #include "include/vector2.h"
 #include "include/rasterizer.h"
+#include <math.h>
 #include <ncurses.h>
 #include <stdio.h>
 
@@ -25,15 +26,15 @@ int main() {
 
 	// Vector2 v1 = {10, 0};
 	// Vector2 v2 = {50, 10};
-//	Vector2 v3 = {100, 40};
+	// Vector2 v3 = {100, 40};
 
 
 	float angle = 0;
-	while (angle < 1) {
+	while (angle < 180) {
 		Matrix44 transformation = matrix44_create_default(); 
-		Vector3 v4 = {2, 1, 1};
-
-		scale(&transformation, &v4);
+		Vector3 v4 = {0, 0, 1};
+		
+		rotate(&transformation, &v4, (angle * M_PI / 180.0));
 
 		Vector4 v1 = {10, 10, 1, 1};
 		Vector4 v2 = {40, 10, 1, 1};
@@ -50,7 +51,7 @@ int main() {
 		rasterizeTriangle(rasterizer, fb, &tv1, &tv2, &tv3);
 		getch();
 		clear();
-		angle += 5;
+		angle += 20;
 		
 	}
 
