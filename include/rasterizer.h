@@ -23,5 +23,9 @@ Framebuffer* rasterizer_get_framebuffer(const Rasterizer* rast);
 // Rasterizer functions
 void rasterizeTriangle(const Rasterizer* rast, Framebuffer* fb, const Vector2* v1, const Vector2* v2, const Vector2* v3); 
 
+void presentFrame(Framebuffer* fb, int x, int y);
+inline void clearFrame(Framebuffer* fb) {
+	framebuffer_clear(fb, 0);
+}
 
 #endif // RASTERIZER_H

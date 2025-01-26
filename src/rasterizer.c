@@ -85,11 +85,15 @@ void rasterizeTriangle(const Rasterizer* rast, Framebuffer* fb, const Vector2* v
 	for (int j = miny; j < maxy; j++) {
 		for (int i = minx; i < maxx; i++) {
 			if(isPointTriangle(i, j, v1, v2, v3)) {
-				mvprintw(j, i, "#");
+				framebuffer_set_pixel(fb, i, j, '#', 0);
 			} else {
-				mvprintw(j, i, ".");
+				framebuffer_set_pixel(fb, i, j, '.', 0);
 			}
 		}
 	} 
 
+}
+
+void presentFrame(Framebuffer *fb, int x, int y) {
+	framebuffer_print(fb, x, y);
 }

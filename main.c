@@ -28,7 +28,6 @@ int main() {
 	// Vector2 v2 = {50, 10};
 	// Vector2 v3 = {100, 40};
 
-
 	float angle = 0;
 	while (angle < 180) {
 		Matrix44 transformation = matrix44_create_default(); 
@@ -48,7 +47,9 @@ int main() {
 		Vector2 tv2 = vector2_create(v2.x, v2.y);
 		Vector2 tv3 = vector2_create(v3.x, v3.y);
 
+		clearFrame(fb);
 		rasterizeTriangle(rasterizer, fb, &tv1, &tv2, &tv3);
+		presentFrame(fb, 0, 0);
 		getch();
 		clear();
 		angle += 20;
