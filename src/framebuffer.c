@@ -102,4 +102,10 @@ void framebuffer_print(Framebuffer *fb, int offsetX, int offsetY) {
 	}
 }
 
+int framebuffer_get_width(Framebuffer* fb) {
+	return fb ? fb->width : 0;
+}
 
+int framebuffer_get_height(Framebuffer* fb) {
+	return fb ? fb->height : 0;
+}

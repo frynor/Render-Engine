@@ -25,5 +25,7 @@ void framebuffer_set_pixel(Framebuffer* fb, int x, int y, colorbuffer_t pixelcol
 colorbuffer_t framebuffer_get_color(Framebuffer* fb, int x, int y);
 depthbuffer_t framebuffer_get_depth(Framebuffer* fb, int x, int y);
 void framebuffer_print(Framebuffer* fb, int offsetX, int offsetY);
+int framebuffer_get_width(Framebuffer* fb);
+int framebuffer_get_height(Framebuffer* fb);
 
 #endif // FRAMEBUFFER_H
