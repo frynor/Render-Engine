@@ -1,4 +1,3 @@
 # RenderEngine
 
-This project is still IN WIP!
-I will include beautiful readme when im done..
+[Watch the video](media/nigga2.mp4)
