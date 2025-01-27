@@ -12,7 +12,8 @@ int main() {
     noecho();
     start_color();
     cbreak();
-    
+    curs_set(0);
+
     int width = 160, height = 48;  // Use standard terminal size
     Rasterizer* rasterizer = rasterizer_create(width, height);
     Framebuffer* fb = rasterizer_get_framebuffer(rasterizer);
