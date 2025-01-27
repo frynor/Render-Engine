@@ -1,8 +1,5 @@
 #include "../include/rasterizer.h"
-#include <math.h>
-#include <ncurses.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../include/defs.h"
 
 #define MAX(a, b) (((a)>(b))? (a) : (b))
 #define MIN(a, b) (((a)<(b))? (a) : (b))

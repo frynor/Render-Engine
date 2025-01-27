@@ -1,9 +1,7 @@
 #include "include/matrix44.h"
 #include "include/vector2.h"
 #include "include/rasterizer.h"
-#include <math.h>
-#include <ncurses.h>
-#include <stdio.h>
+#include "include/defs.h"
 
 #define PI 3.141592653f
 
@@ -14,7 +12,7 @@ int main() {
     cbreak();
     curs_set(0);
 
-    int width = 160, height = 48;  // Use standard terminal size
+    int width = WW, height = WH;  // Use standard terminal size
     Rasterizer* rasterizer = rasterizer_create(width, height);
     Framebuffer* fb = rasterizer_get_framebuffer(rasterizer);
     
