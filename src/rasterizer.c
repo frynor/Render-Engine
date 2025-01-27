@@ -7,26 +7,14 @@
 #define MAX(a, b) (((a)>(b))? (a) : (b))
 #define MIN(a, b) (((a)<(b))? (a) : (b))
 
-static bool isPointTriangle(int i, int j, const Vector2* v1, const Vector2* v2, const Vector2* v3) {
-    /* float area = fabs((v1->x * (v2->y - v3->y) + v2->x * (v3->y - v1->y) + v3->x * (v1->y - v2->y)) / 2.0f);
-
-    float area1 = fabs((i * (v2->y - v3->y) + v2->x * (v3->y - j) + v3->x * (j - v2->y)) / 2.0f);
-    float area2 = fabs((v1->x * (j - v3->y) + i * (v3->y - v1->y) + v3->x * (v1->y - j)) / 2.0f);
-    float area3 = fabs((v1->x * (v2->y - j) + v2->x * (j - v1->y) + i * (v1->y - v2->y)) / 2.0f);
-
-    return fabs(area - (area1 + area2 + area3)) < 0.1f; */ 
-
-    // Calculate barycentric coordinates
-    float denominator = (v2->y - v3->y) * (v1->x - v3->x) + (v3->x - v2->x) * (v1->y - v3->y);
+static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* v2, const Vector2* v3) {
+    float denominator = ((v2->y - v3->y) * (v1->x - v3->x) + (v3->x - v2->x) * (v1->y - v3->y));
     
-    float alpha = ((v2->y - v3->y) * (i - v3->x) + (v3->x - v2->x) * (j - v3->y)) / denominator;
-    float beta = ((v3->y - v1->y) * (i - v3->x) + (v1->x - v3->x) * (j - v3->y)) / denominator;
+    float alpha = ((v2->y - v3->y) * (ptx - v3->x) + (v3->x - v2->x) * (pty - v3->y)) / denominator;
+    float beta = ((v3->y - v1->y) * (ptx - v3->x) + (v1->x - v3->x) * (pty - v3->y)) / denominator;
     float gamma = 1.0f - alpha - beta;
     
-    // Check if point is inside triangle
-    return (alpha >= 0) && (beta >= 0) && (gamma >= 0);
-
-    // THANK YOU CHATGPT FOR BARYCENTRIC INTERPOLATION CALCULATION AND FORMULA, YOUR A TOP G!!!!!!!!!!!!!!!
+    return alpha >= 0.0f && beta >= 0.0f && gamma >= 0.0f && alpha <= 1.0f && beta <= 1.0f && gamma <= 1.0f;
 }
 
 /* static Framebuffer* framebuffer_create(int width, int height) {
@@ -100,9 +88,9 @@ void rasterizeTriangle(const Rasterizer* rast, Framebuffer* fb, const Vector2* v
 	for (int j = miny; j < maxy; j++) {
 		for (int i = minx; i < maxx; i++) {
 			if(isPointTriangle(i, j, &v1, &v2, &v3)) {
-				framebuffer_set_pixel(fb, i, j, ' ', 0);
-			} else {
 				framebuffer_set_pixel(fb, i, j, '#', 0);
+			} else {
+				framebuffer_set_pixel(fb, i, j, ' ', 0);
 			}
 		}
 	} 
