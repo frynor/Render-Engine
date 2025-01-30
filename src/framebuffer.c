@@ -85,11 +85,11 @@ depthbuffer_t framebuffer_get_depth(Framebuffer *fb, int x, int y) {
 	return fb->depthbuffer[index];
 }
 
-void framebuffer_print(Framebuffer *fb, int offsetX, int offsetY) {
+void framebuffer_print(Framebuffer *fb) {
 	if (!fb) return;
 
-	for (int i = offsetY; i < fb->width; i++) {
-		for (int j = offsetX; j < fb->height; j++) {
+	for (int i = 0; i < fb->width; i++) {
+		for (int j = 0; j < fb->height; j++) {
 			int index = (j * fb->width) + i;
 		
 			if (!fb->colorbuffer[index]) continue;

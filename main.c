@@ -12,15 +12,16 @@ int main() {
     cbreak();
     curs_set(0);
 
-    int width = WW, height = WH;  // Use standard terminal size
-    Rasterizer* rasterizer = rasterizer_create(width, height);
+    int width = WW, height = WH;  
+    int currentBuffer = 0;
+    Rasterizer* rasterizer = rasterizer_create(width, height, currentBuffer);
     Framebuffer* fb = rasterizer_get_framebuffer(rasterizer);
     
     float angle = 0;
     while(true) {
-        angle += 0.05f;
+        angle += 0.03f;
         Matrix44 transform = matrix44_create_default();
-        Vector3 axis = {0, 0, 1};
+        Vector3 axis = {0, 1, 1};
         rotate(&transform, &axis, angle);
         
         Vector4 v1 = {-1.0f, 1.0f, 0, 1};
@@ -36,8 +37,10 @@ int main() {
         Vector2 screen_v3 = vector2_create(v3.x, v3.y);
         
         clearFrame(fb);
-        rasterizeTriangle(rasterizer, fb, &screen_v1, &screen_v2, &screen_v3);
-        presentFrame(fb, 0, 0);
+        rasterizeTriangle(rasterizer, &screen_v1, &screen_v2, &screen_v3);
+        presentFrame(fb);
+	swapBuffer(rasterizer);
+
         refresh();
         erase();
         napms(16);  // Add small delay

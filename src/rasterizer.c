@@ -24,12 +24,15 @@ static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* 
 	return fb;
 } */
 
-static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int height) {
+static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int height, int currentBuffer) {
 	if (!rast) return;
-	rast->fb = framebuffer_create(width, height);
+	rast->frameBuffers[0] = framebuffer_create(width, height);
+	rast->frameBuffers[1] = framebuffer_create(width, height);
+
+	swapBuffer(rast);
 }
 
-Rasterizer* rasterizer_create(int width, int height) {
+Rasterizer* rasterizer_create(int width, int height, int currentBuffer) {
 	// Allocating the memory (heap memory (cool stuff bro, check heap vs stack (XD)))
 	Rasterizer* rast = (Rasterizer*)malloc(sizeof(Rasterizer));
 	if (!rast) {
@@ -39,9 +42,10 @@ Rasterizer* rasterizer_create(int width, int height) {
 
 	rast->width = width;
 	rast->height = height;
+	rast->currentBuffer = 0;
 
-	rasterizer_initialize_framebuffer(rast, width, height);
-	if (!rast->fb) {
+	rasterizer_initialize_framebuffer(rast, width, height, currentBuffer);
+	if (!rast->pFrame || !rast->rFrame) {
 		fprintf(stderr, "Failed to initialize framebuffer for Rasterizer\n");
 		free(rast);
 		return NULL;
@@ -53,20 +57,24 @@ Rasterizer* rasterizer_create(int width, int height) {
 void rasterizer_destroy(Rasterizer* rast) {
 	// Freeing up the memory
 	if (rast) {
-		if (rast->fb) {
-			free(rast->fb);
-			rast->fb = NULL;
+		if (rast->frameBuffers[0] || rast->frameBuffers[1]) {
+			free(rast->frameBuffers[0]);
+			free(rast->frameBuffers[1]);
+			rast->frameBuffers[0] = NULL;
+			rast->frameBuffers[1] = NULL;
 		}
 		free(rast);
 	}
 }
 
 Framebuffer* rasterizer_get_framebuffer(const Rasterizer* rast) {
-	return rast ? rast->fb : NULL; 
+	return rast ? rast->pFrame : NULL; 
 }
 
-void rasterizeTriangle(const Rasterizer* rast, Framebuffer* fb, const Vector2* vv1, const Vector2* vv2, const Vector2* vv3) {
+void rasterizeTriangle(const Rasterizer* rast, const Vector2* vv1, const Vector2* vv2, const Vector2* vv3) {
 	if (!rast || !vv1 || !vv2 || !vv3) return;
+
+	Framebuffer* fb = rast->rFrame;
 
 	int h_width = fb->width/2;
 	int h_height = fb->height/2;
@@ -93,6 +101,6 @@ void rasterizeTriangle(const Rasterizer* rast, Framebuffer* fb, const Vector2* v
 	} 
 }
 
-void presentFrame(Framebuffer *fb, int x, int y) {
-	framebuffer_print(fb, x, y);
+void presentFrame(Framebuffer *fb) {
+	framebuffer_print(fb);
 }

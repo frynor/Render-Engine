@@ -2,9 +2,7 @@
 #define VECTOR3_H
 
 typedef struct {
-	float x;
-	float y;
-	float z;
+	float x, y, z;
 } Vector3;
 
 // Creating the original vector
