@@ -1,5 +1,6 @@
 #include "../include/defs.h"
 #include "../include/rasterizer.h"
+#include <threads.h>
 
 #define MAX(a, b) (((a)>(b))? (a) : (b))
 #define MIN(a, b) (((a)<(b))? (a) : (b))
@@ -125,5 +126,5 @@ void rasterizeTriangle(const Rasterizer* rast, const Vector2* vv1, const Vector2
 }
 
 void presentFrame(Framebuffer *fb) {
-	framebuffer_print(fb);
+    framebuffer_print(fb);
 }
