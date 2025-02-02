@@ -6,19 +6,26 @@
 #include "../include/vector4.h"
 #include "../include/matrix44.h"
 #include "../include/framebuffer.h"
+#include <stdbool.h>
+
+typedef bool (*RenderCallBack) (void* userData);
 
 typedef struct {
+	int width;
+	int height;
+	int currentBuffer;
+	Framebuffer* frameBuffers[2];
 	Framebuffer* pFrame;
 	Framebuffer* rFrame;
-	Framebuffer* frameBuffers[2];
-	int currentBuffer;
-	int width, height;
+	RenderCallBack renderCallback;
+	void* userData;
+	bool isRendering;
 } Rasterizer;
 
 
 // Constructor and Destructor in C, kind of..... XD
 Rasterizer* rasterizer_create(int width, int height, int currentBuffer); 
-void rasterizer_destroy(Rasterizer* rast); 
+void rasterizer_destroy(Rasterizer* rast);
 
 // Framebuffer management
 Framebuffer* rasterizer_get_framebuffer(const Rasterizer* rast);
@@ -32,9 +39,15 @@ inline void clearFrame(Framebuffer* rFrame) {
 }
 
 inline void swapBuffer(Rasterizer* rast) {
-	rast->currentBuffer ^= 1;
-	rast->pFrame = rast->frameBuffers[rast->currentBuffer];
-	rast->rFrame = rast->frameBuffers[rast->currentBuffer ^ 1];
+	if (!rast) return;
+
+	rast->currentBuffer = 1 - rast->currentBuffer;
+	rast->pFrame = rast->frameBuffers[1 - rast->currentBuffer];
+	rast->rFrame = rast->frameBuffers[rast->currentBuffer];
 }
+
+void rasterizer_set_callback(Rasterizer* rast, RenderCallBack callback, void* userData);
+bool rasterizer_render_frame(Rasterizer* rast);
+
 
 #endif // RASTERIZER_H

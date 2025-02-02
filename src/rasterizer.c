@@ -1,5 +1,5 @@
-#include "../include/rasterizer.h"
 #include "../include/defs.h"
+#include "../include/rasterizer.h"
 
 #define MAX(a, b) (((a)>(b))? (a) : (b))
 #define MIN(a, b) (((a)<(b))? (a) : (b))
@@ -31,6 +31,29 @@ static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int h
 
 	swapBuffer(rast);
 }
+
+void rasterizer_set_callback(Rasterizer* rast, RenderCallBack callback, void* userData) {
+	if (!rast) return;
+	rast->renderCallback = callback;
+	rast->userData = userData;
+}
+
+bool rasterizer_render_frame(Rasterizer* rast) {
+	if (!rast || !rast->renderCallback || rast->isRendering) return false;
+
+	rast->isRendering = true;
+
+	bool success = rast->renderCallback(rast->userData);
+
+	if (success) {
+		swapBuffer(rast);
+		presentFrame(rast->pFrame);
+	}
+
+	rast->isRendering = false;
+	return success;
+}
+
 
 Rasterizer* rasterizer_create(int width, int height, int currentBuffer) {
 	// Allocating the memory (heap memory (cool stuff bro, check heap vs stack (XD)))
