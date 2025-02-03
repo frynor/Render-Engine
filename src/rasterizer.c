@@ -16,16 +16,6 @@ static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* 
     return alpha >= 0.0f && beta >= 0.0f && gamma >= 0.0f && alpha <= 1.0f && beta <= 1.0f && gamma <= 1.0f;
 }
 
-/* static Framebuffer* framebuffer_create(int width, int height) {
-	Framebuffer* fb = (Framebuffer*)malloc(sizeof(Framebuffer));
-	if (!fb) return NULL;
-
-	fb->width = width;
-	fb->height = height;
-
-	return fb;
-} */
-
 static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int height, int currentBuffer) {
 	if (!rast) return;
 	rast->frameBuffers[0] = framebuffer_create(width, height);
@@ -69,6 +59,7 @@ Rasterizer* rasterizer_create(int width, int height, int currentBuffer) {
 	rast->height = height;
 	rast->currentBuffer = 0;
 
+
 	rasterizer_initialize_framebuffer(rast, width, height, currentBuffer);
 	if (!rast->pFrame || !rast->rFrame) {
 		fprintf(stderr, "Failed to initialize framebuffer for Rasterizer\n");
@@ -86,6 +77,7 @@ void rasterizer_destroy(Rasterizer* rast) {
 		if (rast->frameBuffers[1]) framebuffer_destroy(rast->frameBuffers[1]);
 		free(rast);
 	}
+
 }
 
 Framebuffer* rasterizer_get_framebuffer(const Rasterizer* rast) {
