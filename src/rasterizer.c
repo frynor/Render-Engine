@@ -7,6 +7,7 @@
 
 static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* v2, const Vector2* v3) {
     float denominator = ((v2->y - v3->y) * (v1->x - v3->x) + (v3->x - v2->x) * (v1->y - v3->y));
+    if (fabs(denominator) < 1e-6) return false; // Avoiding division by zero.
     
     float alpha = ((v2->y - v3->y) * (ptx - v3->x) + (v3->x - v2->x) * (pty - v3->y)) / denominator;
     float beta = ((v3->y - v1->y) * (ptx - v3->x) + (v1->x - v3->x) * (pty - v3->y)) / denominator;
@@ -81,12 +82,8 @@ Rasterizer* rasterizer_create(int width, int height, int currentBuffer) {
 void rasterizer_destroy(Rasterizer* rast) {
 	// Freeing up the memory
 	if (rast) {
-		if (rast->frameBuffers[0] || rast->frameBuffers[1]) {
-			free(rast->frameBuffers[0]);
-			free(rast->frameBuffers[1]);
-			rast->frameBuffers[0] = NULL;
-			rast->frameBuffers[1] = NULL;
-		}
+		if (rast->frameBuffers[0]) framebuffer_destroy(rast->frameBuffers[0]);
+		if (rast->frameBuffers[1]) framebuffer_destroy(rast->frameBuffers[1]);
 		free(rast);
 	}
 }

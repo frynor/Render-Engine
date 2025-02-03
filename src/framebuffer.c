@@ -19,6 +19,11 @@ Framebuffer* framebuffer_create(int width, int height) {
 	fb->depthbuffer = malloc(width * height * sizeof(depthbuffer_t));
 
 	if (!fb->colorbuffer || !fb->depthbuffer) {
+		free(fb);
+		return NULL;
+	}
+
+	if (!fb->colorbuffer || !fb->depthbuffer) {
 		fprintf(stderr, "Failed to allocate memory for colorbuffer and depthbuffer!\n");
 		return NULL;
 	}

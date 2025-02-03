@@ -54,15 +54,15 @@ int main() {
 
     RenderState state = {
         .angle = 0.0f,
-        .axis = {0, 1, 1},
-        .v1 = {-1.0f, 1.0f, 0, 1},
-        .v2 = {1.0f, 1.0f, 0, 1},
-        .v3 = {0.0f, -1.0f, 0, 1}
+        .axis = {0.0f, 1.0f, 1.0f},
+        .v1 = {-1.0f, 1.0f, 0.0f, 1.0f},
+        .v2 = {1.0f, 1.0f, 0.0f, 1.0f},
+        .v3 = {0.0f, -1.0f, 0.0f, 1.0f}
     };
 
     rasterizer_set_callback(rasterizer, renderCallBack, &state);
 
-    struct timespec frameTime = {0, 16666667}; // 60 FPS target (16.67ms)
+    struct timespec frameTime = {0, 16666667}; // 60FPS 
     while (true) {
         if (!rasterizer_render_frame(rasterizer)) {
             break;
@@ -70,7 +70,7 @@ int main() {
         
         refresh();
         erase();
-        nanosleep(&frameTime, NULL); // More precise timing than napms
+        nanosleep(&frameTime, NULL); 
     }
     
     // Cleanup
