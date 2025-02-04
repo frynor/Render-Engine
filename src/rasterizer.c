@@ -106,7 +106,7 @@ void rasterizeTriangle(const Rasterizer* rast, const Vector2* vv1, const Vector2
 	for (int j = miny; j < maxy; j++) {
 		for (int i = minx; i < maxx; i++) {
 			if(isPointTriangle(i, j, &v1, &v2, &v3)) {
-				framebuffer_set_pixel(fb, i, j, '#', 0);
+				framebuffer_set_pixel(fb, i, j, '@', 0);
 			} else {
 				framebuffer_set_pixel(fb, i, j, ' ', 0);
 			}
