@@ -21,3 +21,9 @@ void camera_calculate_view_matrix(Camera *camera) {
 	rotate(&camera->viewMatrix, &((Vector3){.0f, 0.0f, 1.0f}), camera->rotation.z);
 	translate(&camera->viewMatrix, &camera->position);
 }
+
+Matrix44 camera_get_pv_matrix(const Camera *camera) {
+	Matrix44 dest;
+       	matrix44_mul(&camera->projMatrix, &camera->viewMatrix, &dest);
+	return dest;	
+}
