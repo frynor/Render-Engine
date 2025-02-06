@@ -19,7 +19,7 @@ bool renderCallBack(void* userData) {
 	RenderState* state = (RenderState*)userData;
 	if (!state || !rasterizer) return false;
 
-	state->angle += 0.03f;
+	state->angle += 0.04f;
 	state->transform = matrix44_create_default();
 	rotate(&state->transform, &state->axis, state->angle);
 
