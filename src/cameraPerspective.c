@@ -9,6 +9,9 @@ Camera* camera_initialize() {
 	}
 	cam->position = (Vector3){0.0f, 0.0f, 0.0f};
 	cam->rotation = (Vector3){0.0f, 0.0f, 0.0f};
+	cam->fov = 0.0f;
+	cam->zFar = 0.0f;
+	cam->zNear = 0.0f;
 	matrix44_identity(&cam->viewMatrix);
 	matrix44_identity(&cam->projMatrix);
 
@@ -25,10 +28,14 @@ void camera_destroy(Camera* camera) {
 
 void camera_calculate_view_matrix(Camera *camera) {
 	matrix44_identity(&camera->viewMatrix);
+
+
 	rotate(&camera->viewMatrix, &((Vector3){1.0f, 0.0f, 0.0f}), camera->rotation.x);
 	rotate(&camera->viewMatrix, &((Vector3){0.0f, 1.0f, 0.0f}), camera->rotation.y);
 	rotate(&camera->viewMatrix, &((Vector3){0.0f, 0.0f, 1.0f}), camera->rotation.z);
 	translate(&camera->viewMatrix, &camera->position);
+
+	Vector3 inversePosition = {-camera->position.x, -camera->position.y, -camera->position.z};
 }
 
 Matrix44 camera_get_pv_matrix(const Camera *camera) {
@@ -38,12 +45,18 @@ Matrix44 camera_get_pv_matrix(const Camera *camera) {
 }
 
 void camera_create_projection(Camera *camera, float fov, float aspect, float zNear, float zFar) {
-	matrix44_identity(&camera->projMatrix);
-	float tanhfov = (float)tanf(camera->fov / 2);
+	camera->fov = fov;
+	camera->aspect = aspect;
+	camera->zNear = zNear;
+	camera->zFar = zFar;
 
-	camera->projMatrix.m00 = 1 / (camera->aspect * tanhfov);
-	camera->projMatrix.m11 = 1 / tanhfov;
+	matrix44_identity(&camera->projMatrix);
+	float tanhfov = (float)tanf(camera->fov / 2.0f);
+
+	camera->projMatrix.m00 = 1.0f / (camera->aspect * tanhfov);
+	camera->projMatrix.m11 = 1.0f / tanhfov;
 	camera->projMatrix.m22 = -(camera->zNear + camera->zFar) / (camera->zFar - camera->zNear);
-	camera->projMatrix.m23 = -1;
-	camera->projMatrix.m32 = -(2 * camera->zFar * camera->zNear) / (camera->zFar - camera->zNear);
+	camera->projMatrix.m23 = -1.0f;
+	camera->projMatrix.m32 = -(2.0f * camera->zFar * camera->zNear) / (camera->zFar - camera->zNear);
+	camera->projMatrix.m33 = 0.0f;
 }
