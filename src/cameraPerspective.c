@@ -28,14 +28,24 @@ void camera_destroy(Camera* camera) {
 
 void camera_calculate_view_matrix(Camera *camera) {
 	matrix44_identity(&camera->viewMatrix);
+	
+	Matrix44 rotX, rotY, rotZ;
+	matrix44_identity(&rotX);
+	matrix44_identity(&rotY);
+	matrix44_identity(&rotZ);
 
 
-	rotate(&camera->viewMatrix, &((Vector3){1.0f, 0.0f, 0.0f}), camera->rotation.x);
-	rotate(&camera->viewMatrix, &((Vector3){0.0f, 1.0f, 0.0f}), camera->rotation.y);
-	rotate(&camera->viewMatrix, &((Vector3){0.0f, 0.0f, 1.0f}), camera->rotation.z);
-	translate(&camera->viewMatrix, &camera->position);
+	rotate(&rotX, &((Vector3){1.0f, 0.0f, 0.0f}), camera->rotation.x);
+	rotate(&rotY, &((Vector3){0.0f, 1.0f, 0.0f}), camera->rotation.y);
+	rotate(&rotZ, &((Vector3){0.0f, 0.0f, 1.0f}), camera->rotation.z);
+
+	// Combine rotations
+    	Matrix44 combinedRotation;
+    	matrix44_mul(&rotZ, &rotY, &combinedRotation);
+    	matrix44_mul(&combinedRotation, &rotX, &camera->viewMatrix);
 
 	Vector3 inversePosition = {-camera->position.x, -camera->position.y, -camera->position.z};
+	translate(&camera->viewMatrix, &inversePosition);
 }
 
 Matrix44 camera_get_pv_matrix(const Camera *camera) {
