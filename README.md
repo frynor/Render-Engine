@@ -11,4 +11,4 @@
 - **Camera & Perspective:** Custom camera system with perspective projection. 🚀
 
 ### 🎬 Example Output
-[![asciinema](https://asciinema.org/a/hCjqUbgKuqBL0foGr1ZUbwwU3)](https://asciinema.org/a/hCjqUbgKuqBL0foGr1ZUbwwU3)
+![Triangle Animation](media/render.cast)
