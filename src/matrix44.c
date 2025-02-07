@@ -284,8 +284,14 @@ void rotate(Matrix44 *mat, const Vector3 *eulerAxis, float angle) {
 void translate(Matrix44 *mat, const Vector3 *translation) {
 	if (!mat || !translation) return;
 
-	mat->m30 += mat->m00 * translation->x + mat->m10 * translation->y + mat->m20 * translation->z;
-	mat->m31 += mat->m01 * translation->x + mat->m11 * translation->y + mat->m21 * translation->z;
-	mat->m32 += mat->m02 * translation->x + mat->m12 * translation->y + mat->m22 * translation->z;
-	mat->m33 += mat->m03 * translation->x + mat->m13 * translation->y + mat->m23 * translation->z;
+	// Row Major is kind of buggy so I switched to column major formulas.
+
+	//mat->m30 += mat->m00 * translation->x + mat->m10 * translation->y + mat->m20 * translation->z;
+	//mat->m31 += mat->m01 * translation->x + mat->m11 * translation->y + mat->m21 * translation->z;
+	//mat->m32 += mat->m02 * translation->x + mat->m12 * translation->y + mat->m22 * translation->z;
+	//mat->m33 += mat->m03 * translation->x + mat->m13 * translation->y + mat->m23 * translation->z;
+
+	mat->m03 += mat->m00 * translation->x + mat->m01 * translation->y + mat->m02 * translation->z;
+    	mat->m13 += mat->m10 * translation->x + mat->m11 * translation->y + mat->m12 * translation->z;
+    	mat->m23 += mat->m20 * translation->x + mat->m21 * translation->y + mat->m22 * translation->z;
 }

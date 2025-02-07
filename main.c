@@ -22,10 +22,10 @@ bool renderCallBack(void* userData) {
 	RenderState* state = (RenderState*)userData;
 	if (!state || !rasterizer) return false;
 
-	state->angle += 0.01f;
+	state->angle += 0.025f;
 	state->transform = matrix44_create_default();
-	translate(&state->transform, &(Vector3){0.0f, 0.0f, -1.0f});
 	rotate(&state->transform, &(Vector3){0.0f, 1.0f, 0.0f}, state->angle);
+
 
 	camera_calculate_view_matrix(camera);
 	Matrix44 PV = camera_get_pv_matrix(camera);
@@ -41,14 +41,17 @@ bool renderCallBack(void* userData) {
 	if (transformed_v1.w != 0.0f) {
 		transformed_v1.x /= transformed_v1.w;
 		transformed_v1.y /= transformed_v1.w;
+		transformed_v1.z /= transformed_v1.w;
 	}
 	if (transformed_v2.w != 0.0f) {
         	transformed_v2.x /= transformed_v2.w;
         	transformed_v2.y /= transformed_v2.w;
+		transformed_v2.z /= transformed_v2.w;
     	}
     	if (transformed_v3.w != 0.0f) {
         	transformed_v3.x /= transformed_v3.w;
         	transformed_v3.y /= transformed_v3.w;
+		transformed_v3.z /= transformed_v3.z;
     	}
 
 
@@ -91,15 +94,14 @@ int main() {
     }
 
     camera = camera_initialize();
-    camera->position = (Vector3){0.0f, 10.0f, 150.0f}; 
-    camera_create_projection(camera, 1.6f, (WW / (float)2.0f) / WH, 0.5f, 400.0f);
+    camera_create_projection(camera, PI/1.4f, (WW / (float)2.0f) / WH, 0.1f, 100.0f);
 
     RenderState state = {
         .angle = 0.0f,
         .axis = {0.0f, 1.0f, 0.0f},
-        .v1 = {-1.0f, 1.0f, 2.0f, 1.0f},
-        .v2 = {1.0f, 1.0f, 2.0f, 1.0f},
-        .v3 = {0.0f, -1.0f, 2.0f, 1.0f}
+        .v1 = {-1.0f, 1.0f, .0f, 1.0f},
+        .v2 = {1.0f, 1.0f, .0f, 1.0f},
+        .v3 = {0.0f, -1.0f, .0f, 1.0f}
     };
 
     rasterizer_set_callback(rasterizer, renderCallBack, &state);

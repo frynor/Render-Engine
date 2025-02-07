@@ -27,26 +27,17 @@ void camera_destroy(Camera* camera) {
 }
 
 void camera_calculate_view_matrix(Camera *camera) {
-	matrix44_identity(&camera->viewMatrix);
-	
-	Matrix44 rotX, rotY, rotZ;
-	matrix44_identity(&rotX);
-	matrix44_identity(&rotY);
-	matrix44_identity(&rotZ);
-
-
-	rotate(&rotX, &((Vector3){1.0f, 0.0f, 0.0f}), camera->rotation.x);
-	rotate(&rotY, &((Vector3){0.0f, 1.0f, 0.0f}), camera->rotation.y);
-	rotate(&rotZ, &((Vector3){0.0f, 0.0f, 1.0f}), camera->rotation.z);
-
-	// Combine rotations
-    	Matrix44 combinedRotation;
-    	matrix44_mul(&rotZ, &rotY, &combinedRotation);
-    	matrix44_mul(&combinedRotation, &rotX, &camera->viewMatrix);
-
-	Vector3 inversePosition = {-camera->position.x, -camera->position.y, -camera->position.z};
-	translate(&camera->viewMatrix, &inversePosition);
+    // Reset viewMatrix to identity
+    matrix44_identity(&camera->viewMatrix);
+    
+    Vector3 negPos = { -camera->position.x, -camera->position.y, -camera->position.z };
+    translate(&camera->viewMatrix, &negPos);
+    
+    rotate(&camera->viewMatrix, &((Vector3){0.0f, 0.0f, 1.0f}), -camera->rotation.z);
+    rotate(&camera->viewMatrix, &((Vector3){0.0f, 1.0f, 0.0f}), -camera->rotation.y);
+    rotate(&camera->viewMatrix, &((Vector3){1.0f, 0.0f, 0.0f}), -camera->rotation.x);
 }
+
 
 Matrix44 camera_get_pv_matrix(const Camera *camera) {
 	Matrix44 dest;
@@ -68,5 +59,5 @@ void camera_create_projection(Camera *camera, float fov, float aspect, float zNe
 	camera->projMatrix.m22 = -(camera->zNear + camera->zFar) / (camera->zFar - camera->zNear);
 	camera->projMatrix.m23 = -1.0f;
 	camera->projMatrix.m32 = -(2.0f * camera->zFar * camera->zNear) / (camera->zFar - camera->zNear);
-	camera->projMatrix.m33 = 0.0f;
+	camera->projMatrix.m33 = 1.0f;
 }
