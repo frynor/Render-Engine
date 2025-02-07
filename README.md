@@ -9,3 +9,6 @@
 - **Double Buffering:** Smooth animations with two framebuffers. 🚀
 - **Rasterization:** Efficient triangle rasterization directly in terminal. 🚀
 - **Camera & Perspective:** Custom camera system with perspective projection. 🚀
+
+### 🎬 Example Output
+[![asciinema](https://asciinema.org/a/hCjqUbgKuqBL0foGr1ZUbwwU3)](https://asciinema.org/a/hCjqUbgKuqBL0foGr1ZUbwwU3)
