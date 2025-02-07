@@ -11,4 +11,4 @@
 - **Camera & Perspective:** Custom camera system with perspective projection. 🚀
 
 ### 🎬 Example Output
-![Triangle Animation](media/render.cast)
+![Triangle Animation](media/triangle.gif)
