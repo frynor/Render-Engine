@@ -114,6 +114,24 @@ void rasterizeTriangle(const Rasterizer* rast, const Vector2* vv1, const Vector2
 	} 
 }
 
+void rasterizeSquare(const Rasterizer* rast, int x1, int y1, int x2, int y2) {
+	if (!rast) return;
+
+	Framebuffer* fb = rast->rFrame;
+
+	x1 = MAX(0, x1);
+	y1 = MAX(0, y1);
+	x2 = MAX(framebuffer_get_width(fb), x2);
+	y2 = MAX(framebuffer_get_height(fb), y2);
+
+	for (int y = y1; y < y2; y++) {
+		for (int x = x1; x < x2; x++) {
+			framebuffer_set_pixel(fb, x, y, '#', 0);
+		}
+	}
+}
+
+
 void presentFrame(Framebuffer *fb) {
     framebuffer_print(fb);
 }

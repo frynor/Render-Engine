@@ -32,6 +32,7 @@ Framebuffer* rasterizer_get_framebuffer(const Rasterizer* rast);
 
 // Rasterizer functions
 void rasterizeTriangle(const Rasterizer* rast, const Vector2* v1, const Vector2* v2, const Vector2* v3); 
+void rasterizeSquare(const Rasterizer* rast, int x1, int y1, int x2, int y2);
 
 void presentFrame(Framebuffer* pFrame);
 inline void clearFrame(Framebuffer* rFrame) {
