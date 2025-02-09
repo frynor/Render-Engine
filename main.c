@@ -60,8 +60,12 @@ bool renderCallBack(void* userData) {
     	Vector2 screen_v2 = vector2_create(transformed_v2.x, transformed_v2.y);
     	Vector2 screen_v3 = vector2_create(transformed_v3.x, transformed_v3.y);
 
+	Vector2 topLeft = {10, 10};
+	Vector2 bottomRight = {20, 20};
+
 	clearFrame(rasterizer->rFrame);
-	rasterizeTriangle(rasterizer, &screen_v1, &screen_v2, &screen_v3);
+	rasterizeSquare(rasterizer, &screen_v1, &screen_v2);
+	// rasterizeTriangle(rasterizer, &screen_v1, &screen_v2, &screen_v3);
 
 	return true;
 }
