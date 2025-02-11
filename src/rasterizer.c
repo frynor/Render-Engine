@@ -6,6 +6,7 @@
 #define MIN(a, b) (((a)<(b))? (a) : (b))
 
 static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* v2, const Vector2* v3) {
+    const float EPSILON = 1e-4f;
     float denominator = ((v2->y - v3->y) * (v1->x - v3->x) + (v3->x - v2->x) * (v1->y - v3->y));
     if (fabs(denominator) < 1e-6) return false; // Avoiding division by zero.
     
@@ -13,7 +14,8 @@ static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* 
     float beta = ((v3->y - v1->y) * (ptx - v3->x) + (v1->x - v3->x) * (pty - v3->y)) / denominator;
     float gamma = 1.0f - alpha - beta;
     
-    return alpha >= 0.0f && beta >= 0.0f && gamma >= 0.0f && alpha <= 1.0f && beta <= 1.0f && gamma <= 1.0f;
+    return (alpha >= -EPSILON) && (beta >= -EPSILON) && (gamma >= -EPSILON) && 
+           (alpha <= 1.0f + EPSILON) && (beta <= 1.0f + EPSILON) && (gamma <= 1.0f + EPSILON);
 }
 
 static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int height, int currentBuffer) {

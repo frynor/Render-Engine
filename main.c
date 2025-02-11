@@ -12,7 +12,7 @@ typedef struct RenderState {
 	float angle;
 	Matrix44 transform;
 	Vector3 axis;
-	Vector4 v1, v2, v3;
+	Vector4 v1, v2, v3, v4;
 } RenderState;
 
 Rasterizer* rasterizer = NULL;
@@ -36,6 +36,8 @@ bool renderCallBack(void* userData) {
 	Vector4 transformed_v1 = matrix44_multiply_vector4(&MPV, &state->v1);
     	Vector4 transformed_v2 = matrix44_multiply_vector4(&MPV, &state->v2);
     	Vector4 transformed_v3 = matrix44_multiply_vector4(&MPV, &state->v3);
+    	Vector4 transformed_v4 = matrix44_multiply_vector4(&MPV, &state->v4);
+
 
 	// Perspective Divide
 	if (transformed_v1.w != 0.0f) {
@@ -51,21 +53,25 @@ bool renderCallBack(void* userData) {
     	if (transformed_v3.w != 0.0f) {
         	transformed_v3.x /= transformed_v3.w;
         	transformed_v3.y /= transformed_v3.w;
-		transformed_v3.z /= transformed_v3.z;
+		transformed_v3.z /= transformed_v3.w;
     	}
+	if (transformed_v4.w != 0.0f) {
+		transformed_v4.x /= transformed_v4.w;
+		transformed_v4.y /= transformed_v4.w;
+		transformed_v4.z /= transformed_v4.w;
+	}
+
 
 
 	// Passing NDC coordinates to rasterizer
 	Vector2 screen_v1 = vector2_create(transformed_v1.x, transformed_v1.y);
     	Vector2 screen_v2 = vector2_create(transformed_v2.x, transformed_v2.y);
     	Vector2 screen_v3 = vector2_create(transformed_v3.x, transformed_v3.y);
+    	Vector2 screen_v4 = vector2_create(transformed_v4.x, transformed_v4.y);
 
-	Vector2 topLeft = {10, 10};
-	Vector2 bottomRight = {20, 20};
 
 	clearFrame(rasterizer->rFrame);
-	rasterizeSquare(rasterizer, &screen_v1, &screen_v2);
-	// rasterizeTriangle(rasterizer, &screen_v1, &screen_v2, &screen_v3);
+	rasterizeTriangle(rasterizer, &screen_v1, &screen_v2, &screen_v4);
 
 	return true;
 }
@@ -105,7 +111,8 @@ int main() {
         .axis = {0.0f, 1.0f, 0.0f},
         .v1 = {-1.0f, 1.0f, .0f, 1.0f},
         .v2 = {1.0f, 1.0f, .0f, 1.0f},
-        .v3 = {0.0f, -1.0f, .0f, 1.0f}
+        .v3 = {1.0f, -1.0f, .0f, 1.0f},
+	.v4 = {-1.0f, -1.0f, .0f, 1.0f}
     };
 
     rasterizer_set_callback(rasterizer, renderCallBack, &state);
