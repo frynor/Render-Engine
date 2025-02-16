@@ -1,9 +1,10 @@
 #include "../include/defs.h"
 #include "../include/rasterizer.h"
-#include <threads.h>
+#include <pthread.h>
 
 #define MAX(a, b) (((a)>(b))? (a) : (b))
 #define MIN(a, b) (((a)<(b))? (a) : (b))
+#define NUM_THREADS 4
 
 static bool isPointTriangle(int ptx, int pty, const Vector2* v1, const Vector2* v2, const Vector2* v3) {
     const float EPSILON = 1e-4f;
@@ -26,6 +27,22 @@ static void rasterizer_initialize_framebuffer(Rasterizer* rast, int width, int h
 	swapBuffer(rast);
 }
 
+void* render_section(void* arg) {
+	ThreadData* data = (ThreadData*)(arg);
+	Framebuffer* fb = data->fb;
+
+	for (int y = data->startY; y < data->endY; y++) {
+		for (int x = 0; x < fb->width; x++) {
+			if (isPointTriangle(x, y, &data->v1, &data->v2, &data->v3)) {
+				framebuffer_set_pixel(fb, x, y, '#', 0);
+			} else {
+				framebuffer_set_pixel(fb, x, y, ' ', 0);
+			}
+		}
+	} 
+	return NULL;
+}
+
 void rasterizer_set_callback(Rasterizer* rast, RenderCallBack callback, void* userData) {
 	if (!rast) return;
 	rast->renderCallback = callback;
@@ -34,18 +51,16 @@ void rasterizer_set_callback(Rasterizer* rast, RenderCallBack callback, void* us
 
 bool rasterizer_render_frame(Rasterizer* rast) {
 	if (!rast || !rast->renderCallback || rast->isRendering) return false;
-
 	rast->isRendering = true;
 
-	bool success = rast->renderCallback(rast->userData);
+	// Call the render callback which will handle the triangle rendering
+	bool result = rast->renderCallback(rast->userData);
 
-	if (success) {
-		swapBuffer(rast);
-		presentFrame(rast->pFrame);
-	}
+	swapBuffer(rast);
+	presentFrame(rast->pFrame);
 
 	rast->isRendering = false;
-	return success;
+	return result;
 }
 
 
@@ -103,9 +118,28 @@ void rasterizeTriangle(const Rasterizer* rast, const Vector2* vv1, const Vector2
     	minx = MAX(0, MIN(v1.x, MIN(v2.x, v3.x)));
     	miny = MAX(0, MIN(v1.y, MIN(v2.y, v3.y)));
     	maxx = MIN(framebuffer_get_width(fb), ceil(MAX(v1.x, MAX(v2.x, v3.x)) + 1));
-    	maxy = MIN(framebuffer_get_height(fb), ceil(MAX(v1.y, MAX(v2.y, v3.y)) + 1));
+    	maxy = MIN(framebuffer_get_height(fb), ceil(MAX(v1.y, MAX(v2.y, v3.y)) + 1)); 
 
-	for (int j = miny; j < maxy; j++) {
+	pthread_t threads[NUM_THREADS];
+	ThreadData threadData[NUM_THREADS];
+	int triangleHeight = maxy - miny;
+	int rowsPerThread = triangleHeight / NUM_THREADS;
+
+	for (int i = 0; i < NUM_THREADS; i++) {
+		threadData[i].fb = fb;
+		threadData[i].v1 = v1;
+		threadData[i].v2 = v2;
+		threadData[i].v3 = v3;
+		threadData[i].startY = miny + (i * rowsPerThread);
+		threadData[i].endY = (i == NUM_THREADS - 1) ? maxy : miny + ((i + 1) * rowsPerThread);
+		pthread_create(&threads[i], NULL, render_section, &threadData[i]);
+    	}
+
+	for (int i = 0; i < NUM_THREADS; i++) {
+        	pthread_join(threads[i], NULL);
+    	}
+
+	/* for (int j = miny; j < maxy; j++) {
 		for (int i = minx; i < maxx; i++) {
 			if(isPointTriangle(i, j, &v1, &v2, &v3)) {
 				framebuffer_set_pixel(fb, i, j, '#', 0);
@@ -113,7 +147,7 @@ void rasterizeTriangle(const Rasterizer* rast, const Vector2* vv1, const Vector2
 				framebuffer_set_pixel(fb, i, j, ' ', 0);
 			}
 		}
-	} 
+	} */ 
 }
 
 void rasterizeSquare(const Rasterizer* rast, const Vector2* v1, const Vector2* v2) {
@@ -128,7 +162,7 @@ void rasterizeSquare(const Rasterizer* rast, const Vector2* v1, const Vector2* v
 
 	for (int y = y1; y < y2; y++) {
 		for (int x = x1; x < x2; x++) {
-			framebuffer_set_pixel(fb, x, y, '#', 0);
+			framebuffer_set_pixel(fb, x, y, '@', 0);
 		}
 	}
 }

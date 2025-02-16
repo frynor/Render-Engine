@@ -7,6 +7,7 @@
 #include "../include/matrix44.h"
 #include "../include/framebuffer.h"
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef bool (*RenderCallBack) (void* userData);
 
@@ -21,6 +22,15 @@ typedef struct {
 	void* userData;
 	bool isRendering;
 } Rasterizer;
+
+typedef struct {
+	Framebuffer* fb;
+	int startY;
+	int endY;
+	Vector2 v1;
+	Vector2 v2;
+	Vector2 v3;
+} ThreadData;
 
 
 // Constructor and Destructor in C, kind of..... XD
